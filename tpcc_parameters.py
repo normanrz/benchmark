@@ -102,6 +102,8 @@ aparser.add_argument('--vtune', default=None, type=str,
                      help='Automatically resume running vTune session once load is complete and stop when benchmark is done (implies --manual) - give vTune project folder (e.g. ~/intel/amplxe/projects/hyrise/) - assumes vTune environment is set (i.e., amplxe-cl exists)')
 aparser.add_argument('--nodes', default=None, type=str,
                      help='NUMA nodes for Hyrise Worker threads.')
+aparser.add_argument('--memnodes', default=None, type=str,
+                     help='NUMA memory nodes for Hyrise Worker threads.')
 
 args = vars(aparser.parse_args())
 
@@ -116,8 +118,8 @@ def create_benchmark(name, settings_kwargs, groupId, parameters, benchmark_kwarg
     runId = str(parameters).replace(",", "@")
     s = benchmark.Settings(name, **settings_kwargs)
     benchmark_kwargs = copy.copy(benchmark_kwargs)    
-    benchmark_kwargs["nodes"] = 1
-    benchmark_kwargs["memNode"] = 1
+#    benchmark_kwargs["nodes"] = 1
+#    benchmark_kwargs["memNode"] = 1
     return benchmark.TPCCBenchmark(groupId, runId, s, **benchmark_kwargs) 
 
 def create_benchmark_none(name, groupId, parameters, benchmark_kwargs):
@@ -164,5 +166,6 @@ kwargs = {
     "onlyNeworders"     : args["onlyNeworders"],
     "csv"               : args["csv"],
     "vtune"             : args["vtune"],
-    "nodes"             : args["nodes"]
+    "nodes"             : args["nodes"],
+    "memNode"           : args["memnodes"]
 }

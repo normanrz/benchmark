@@ -70,7 +70,7 @@ class Benchmark:
         self._write_to_file_count = kwargs["write_to_file_count"] if kwargs.has_key("write_to_file_count") else None
         self._checkpoint_interval = str(kwargs["checkpointInterval"]) if kwargs.has_key("checkpointInterval") else None
         self._commit_window     = str(kwargs["commitWindow"]) if kwargs.has_key("commitWindow") else None
-        self._csv                = kwargs["csv"] if kwargs.has_key("csv") else False
+        self._csv               = kwargs["csv"] if kwargs.has_key("csv") else False
         self._nodes             = kwargs["nodes"] if kwargs.has_key("nodes") else None
         self._vtune             = os.path.expanduser(kwargs["vtune"]) if kwargs.has_key("vtune") and kwargs["vtune"] is not None else None
         self._with_profiler     = kwargs["profiler"] if kwargs.has_key("profiler") else None
@@ -119,15 +119,17 @@ class Benchmark:
         print "All users have terminated."
         return True
 
-    def run(self):
-        filename = self._dirResults + "/ab.log"
-        i = 1
-        while not os.path.isfile(filename):
-            print "Starting benchmark try", i, "for file", filename
-            self.run_real()
-            i = i + 1
+    # def run(self):
+    #     filename = self._dirResults
+    #     i = 1
+    #     if os.path.exists(filename):
+    #         print "Refusing benchmark because", filename, "already exists"
+    #     while not os.path.exists(filename):
+    #         print "Starting benchmark try", i, "for file", filename
+    #         self.run_real()
+    #         i = i + 1
 
-    def run_real(self):
+    def run(self):
 
         try:
             signal.signal(signal.SIGINT, self._signalHandler)
@@ -408,6 +410,7 @@ class Benchmark:
 
 
     def _createUsers(self):
+        self._users = []
         for i in range(self._numUsers):
             self._users.append(self._userClass(userId=i, host=self._host, port=self._port, dirOutput=self._dirResults, queryDict=self._queryDict, collectPerfData=self._collectPerfData, useJson=self._useJson, write_to_file=self._write_to_file, write_to_file_count=self._write_to_file_count, **self._userArgs))
 
