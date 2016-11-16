@@ -59,7 +59,7 @@ class Benchmark:
         self._build             = None
         self._serverProc        = None
         self._users             = []
-        self._scheduler         = kwargs["scheduler"] if kwargs.has_key("scheduler") else "CoreBoundQueuesScheduler"
+        self._scheduler         = kwargs["scheduler"] if kwargs.has_key("scheduler") else "WSCoreBoundQueuesScheduler"
         self._serverIP          = kwargs["serverIP"] if kwargs.has_key("serverIP") else "127.0.0.1"
         self._remoteUser        = kwargs["remoteUser"] if kwargs.has_key("remoteUser") else "hyrise"
         self._remotePath        = kwargs["remotePath"] if kwargs.has_key("remotePath") else "/home/" + kwargs["remoteUser"] + "/benchmark"
@@ -448,7 +448,7 @@ class Benchmark:
         self._stopServer()
         for u in self._users:
             u.join()
-        exit()
+        exit(1)
 
     def _startSSHConnection(self):
         self._ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
