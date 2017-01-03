@@ -352,6 +352,7 @@ class Benchmark:
                                                 env=env,
                                                 stdout=open("/dev/null") if not self._stdout else None,
                                                 stderr=open("/dev/null") if not self._stderr else None)
+            print "Server PID '%d'" % self._serverProc.pid
         else:
             self._startRemoteServer()
 
