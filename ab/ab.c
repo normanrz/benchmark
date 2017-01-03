@@ -1336,10 +1336,10 @@ static void close_connection(struct connection * c)
             /* first time here */
             doclen = c->bread;
         }
-        else if (c->bread != doclen) {
-            bad++;
-            err_length++;
-        }
+//        else if (c->bread != doclen) {
+//            bad++;
+//            err_length++;
+//        }
         /* save out time */
         if (done < requests) {
             struct data *s = &stats[done++];
@@ -1574,10 +1574,10 @@ static void read_connection(struct connection * c)
             /* first time here */
             doclen = c->bread;
         }
-        else if (c->bread != doclen) {
-            bad++;
-            err_length++;
-        }
+//        else if (c->bread != doclen) {
+//            bad++;
+//            err_length++;
+//        }
         if (done < requests) {
             struct data *s = &stats[done++];
             doneka++;
