@@ -422,12 +422,19 @@ class Benchmark:
                 sys.stdout.flush()
                 self._serverProc.terminate()
                 time.sleep(0.5)
-                if self._serverProc.poll() is None:
+                if self._serverProc.poll() is not None:
+                    print "done."
+                    return
+                else:
                     #print "Server still running. Waiting 2 sec and forcing shutdown..."
                     time.sleep(2)
                     self._serverProc.kill()
-                time.sleep(0.5)
-                if self._serverProc.poll() is None:
+
+                time.sleep(5)
+                if self._serverProc.poll() is not None:
+                    print "done."
+                    return
+                else:
                     subprocess.call(["killall", "-u", os.getlogin(), "hyrise-server_release"])
                 time.sleep(5)
         else:
